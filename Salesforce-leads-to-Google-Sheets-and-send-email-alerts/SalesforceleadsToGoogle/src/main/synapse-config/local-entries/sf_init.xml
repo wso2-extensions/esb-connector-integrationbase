@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="sf_init" xmlns="http://ws.apache.org/ns/synapse">
+    <salesforce.init>
+        <username>{$ctx:salesforcesoap.lead.username}</username>
+        <password>{$ctx:salesforcesoap.lead.password}</password>
+        <loginUrl>{$ctx:salesforcesoap.lead.loginurl}</loginUrl>
+        <blocking>{$ctx:salesforcesoap.lead.blocking}</blocking>
+    </salesforce.init>
+</localEntry>

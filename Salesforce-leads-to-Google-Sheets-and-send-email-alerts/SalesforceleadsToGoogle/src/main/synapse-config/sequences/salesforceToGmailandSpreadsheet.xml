@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="salesforceToGmailandSpreadsheet" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <script language="js"><![CDATA[mc.setProperty("salesforce.lead.username",java.lang.System.getenv("salesforce_lead_username"));
+			     mc.setProperty("salesforce.lead.password",java.lang.System.getenv("salesforce_lead_password"));
+			     mc.setProperty("salesforce.lead.loginurl",java.lang.System.getenv("salesforce_lead_loginurl"));
+			     mc.setProperty("salesforce.lead.blocking",java.lang.System.getenv("salesforce_lead_blocking"));
+			     mc.setProperty("salesforce.lead.interval",java.lang.System.getenv("salesforce_lead_interval"));
+			     mc.setProperty("spreadsheet.lead.accessToken",java.lang.System.getenv("spreadsheet_lead_accessToken"));
+			     mc.setProperty("spreadsheet.lead.clientId",java.lang.System.getenv("spreadsheet_lead_clientId"));
+			     mc.setProperty("spreadsheet.lead.clientSecret",java.lang.System.getenv("spreadsheet_lead_clientSecret"));
+			     mc.setProperty("spreadsheet.lead.refreshToken",java.lang.System.getenv("spreadsheet_lead_refreshToken"));
+			     mc.setProperty("spreadsheet.lead.apiUrl",java.lang.System.getenv("spreadsheet_lead_apiUrl"));
+			     mc.setProperty("spreadsheet.lead.spreadsheetId",java.lang.System.getenv("spreadsheet_lead_spreadsheetId"));
+			     mc.setProperty("spreadsheet.lead.spreadsheetRange",java.lang.System.getenv("spreadsheet_lead_spreadsheetRange"));
+			     mc.setProperty("gmail.lead.userId",java.lang.System.getenv("gmail_lead_userId"));
+			     mc.setProperty("gmail.lead.refreshToken",java.lang.System.getenv("gmail_lead_refreshToken"));
+			     mc.setProperty("gmail.lead.clientSecret",java.lang.System.getenv("gmail_lead_clientSecret"));
+			     mc.setProperty("gmail.lead.clientId",java.lang.System.getenv("gmail_lead_clientId"));
+			     mc.setProperty("gmail.lead.accessToken",java.lang.System.getenv("gmail_lead_accessToken"));
+			     mc.setProperty("gmail.lead.apiUrl",java.lang.System.getenv("gmail_lead_apiUrl"));
+			     mc.setProperty("gmail.lead.managerEmailId",java.lang.System.getenv("gmail_lead_managerEmailId"));
+			     var dt = new Date(); 
+			     var interval = mc.getProperty("salesforce.lead.interval");
+                 dt.setTime(dt.getTime()-interval*1000);
+				 var queryString = "SELECT id, firstname, lastname, company, Email, CreatedDate FROM Lead WHERE CreatedDate > "   
+				 queryString = queryString.concat(dt.toISOString());                  
+                 mc.setProperty("queryString",queryString);]]></script>
+    <salesforce.query configKey="sf_init">
+        <batchSize>100</batchSize>
+        <queryString>{$ctx:queryString}</queryString>
+    </salesforce.query>
+    <iterate expression="//ns:records" id="msgIterator" xmlns:ns="urn:partner.soap.sforce.com" xmlns:urn="urn:sobject.partner.soap.sforce.com">
+        <target>
+            <sequence>
+                <property expression="//ns:records/urn:Email/text()" name="salesforce.lead.email" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:Id/text()" name="salesforce.lead.id" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:FirstName/text()" name="salesforce.lead.firstname" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:LastName/text()" name="salesforce.lead.lastname" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:CreatedDate/text()" name="salesforce.lead.createdDate" scope="default" type="STRING"/>
+                <log level="custom">
+                    <property expression="$ctx:salesforce.lead.firstname" name="Customer Iterotor"/>
+                </log>
+                <script language="js"><![CDATA[var mail = mc.getProperty("salesforce.lead.email");
+			    var id = mc.getProperty("salesforce.lead.id");
+			    var fname = mc.getProperty("salesforce.lead.firstname");
+			    var lname = mc.getProperty("salesforce.lead.lastname");  
+			    var createdDate = mc.getProperty("salesforce.lead.createdDate");                                
+                var fields = "[[";                         
+                if(mail !="" && mail !=null && id !="" && id !=null && fname !="" && fname !=null && lname !="" && lname !=null){
+                fields = fields.concat('"' + id + '","' + mail + '","' + fname + '","' + lname + '","' + createdDate + '"');
+                }
+                fields = fields.concat("]]");
+                mc.setProperty("spreadsheet.lead.raw",fields);]]></script>
+                <log level="custom">
+                    <property expression="$ctx:spreadsheet.lead.raw" name="Customer Iterotor"/>
+                </log>
+                <googlespreadsheet.addRowsColumnsData configKey="gs_init">
+                    <spreadsheetId>{$ctx:spreadsheet.lead.spreadsheetId}</spreadsheetId>
+                    <range>{$ctx:spreadsheet.lead.spreadsheetRange}</range>
+                    <valueInputOption>RAW</valueInputOption>
+                    <values>{$ctx:spreadsheet.lead.raw}</values>
+                </googlespreadsheet.addRowsColumnsData>
+                <property expression="json-eval($.updates.updatedRange)" name="spreadsheet.lead.updatedRange" scope="default" type="STRING"/>
+                <googlespreadsheet.getCellData configKey="gs_init">
+                    <spreadsheetId>{$ctx:spreadsheet.lead.spreadsheetId}</spreadsheetId>
+                    <range>{$ctx:spreadsheet.lead.updatedRange}</range>
+                </googlespreadsheet.getCellData>
+                <property expression="json-eval($.values[0][0])" name="spreadsheet.lead.sfId" scope="default" type="STRING"/>
+                <property expression="json-eval($.values[0][1])" name="spreadsheet.lead.mailId" scope="default" type="STRING"/>
+                <property expression="json-eval($.values[0][2])" name="spreadsheet.lead.firstName" scope="default" type="STRING"/>
+                <property expression="json-eval($.values[0][3])" name="spreadsheet.lead.lastName" scope="default" type="STRING"/>
+                <property expression="json-eval($.values[0][4])" name="spreadsheet.lead.createdDate" scope="default" type="STRING"/>
+                <script language="js"><![CDATA[var mail = mc.getProperty("spreadsheet.lead.mailId");
+			    var id = mc.getProperty("spreadsheet.lead.sfId");
+			    var fname = mc.getProperty("spreadsheet.lead.firstName");
+			    var lname = mc.getProperty("spreadsheet.lead.lastName");  
+			    var createdDate = mc.getProperty("salesforce.lead.createdDate");                         
+                var contentType = "The New Lead Registration detail is: "                         
+                if(mail !="" && mail !=null && id !="" && id !=null && fname !="" && fname !=null && lname !="" && lname !=null){
+                contentType = contentType.concat('"The Email Id is: ' + mail + '","The Salesforce Id is: ' + id + '","The Firstname is: ' + fname + '","The Lastname is: ' + lname + '"');
+                }
+                mc.setProperty("gmail.lead.contentBody",contentType);]]></script>
+                <gmail.sendMail configKey="gm_init">
+                    <to>{$ctx:gmail.lead.managerEmailId}</to>
+                    <subject>New Lead Registration</subject>
+                    <from>{$ctx:gmail.lead.userId}</from>
+                    <messageBody>{$ctx:gmail.lead.contentBody}</messageBody>
+                    <contentType>text/html; charset=UTF-8</contentType>
+                </gmail.sendMail>
+            </sequence>
+        </target>
+    </iterate>
+    <drop/>
+</sequence>

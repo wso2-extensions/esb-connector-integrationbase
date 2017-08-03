@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="gmail-connector" groupId="com.example.SalesforceToGoogle.lib" version="3.0.7" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>gmail-connector-3.0.7.zip</file>
+    </artifact>
+    <artifact name="googlespreadsheet-connector" groupId="com.example.SalesforceToGoogle.lib" version="3.0.0" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>googlespreadsheet-connector-3.0.0.zip</file>
+    </artifact>
+    <artifact name="salesforce-connector" groupId="com.example.SalesforceToGoogle.lib" version="2.0.1" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>salesforce-connector-2.0.1.zip</file>
+    </artifact>
+</artifacts>
