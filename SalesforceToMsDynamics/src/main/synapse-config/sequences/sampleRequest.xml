@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="sampleRequest" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <script language="js"><![CDATA[mc.setProperty("salesforcerest.accessToken",java.lang.System.getenv("salesforcerest_accessToken"));
+			     mc.setProperty("salesforcerest.apiUrl",java.lang.System.getenv("salesforcerest_apiUrl"));
+			     mc.setProperty("salesforcerest.apiVersion",java.lang.System.getenv("salesforcerest_apiVersion"));
+			     mc.setProperty("salesforcerest.hostName",java.lang.System.getenv("salesforcerest_hostName"));
+			     mc.setProperty("salesforcerest.clientSecret",java.lang.System.getenv("salesforcerest_clientSecret"));
+			     mc.setProperty("salesforcerest.clientId",java.lang.System.getenv("salesforcerest_clientId"));
+			     mc.setProperty("salesforcerest.refreshToken",java.lang.System.getenv("salesforcerest_refreshToken"));
+			     mc.setProperty("salesforcerest.registryPath",java.lang.System.getenv("salesforcerest_registryPath"));		   
+ 			     mc.setProperty("msdynamics365.apiUrl",java.lang.System.getenv("msdynamics365_apiUrl"));
+  			     mc.setProperty("msdynamics365.accessToken",java.lang.System.getenv("msdynamics365_accessToken"));
+		         mc.setProperty("msdynamics365.refreshToken",java.lang.System.getenv("msdynamics365_refreshToken"));
+ 			     mc.setProperty("msdynamics365.apiVersion",java.lang.System.getenv("msdynamics365_apiVersion"));
+ 			     mc.setProperty("msdynamics365.resource",java.lang.System.getenv("msdynamics365_resource"));
+ 			     mc.setProperty("msdynamics365.clientSecret",java.lang.System.getenv("msdynamics365_clientSecret"));
+ 			     mc.setProperty("msdynamics365.clientId",java.lang.System.getenv("msdynamics365_clientId"));
+ 			     mc.setProperty("task.interval.time",java.lang.System.getenv("task_interval_time"));
+ 			     var dt = new Date(); 
+			     var interval = mc.getProperty("task.interval.time");
+                 dt.setTime(dt.getTime()-interval*1000);
+				 var queryString = "SELECT id, name, CreatedDate FROM Account WHERE CreatedDate > "   
+				 queryString = queryString.concat(dt.toISOString());                  
+                 mc.setProperty("queryString",queryString);]]></script>
+    <salesforcerest.query configKey="sf_init">
+        <queryString>{$ctx:queryString}</queryString>
+    </salesforcerest.query>
+    <iterate expression="//records" id="msgIterator">
+        <target>
+            <sequence>
+                <property expression="//records/Name/text()" name="salesforce.account.name" scope="default" type="STRING"/>
+                <log level="custom">
+                    <property expression="$ctx:salesforce.account.name" name="Name"/>
+                </log>
+                <payloadFactory media-type="json">
+                    <format>
+		                {"name":"$1"}
+		            </format>
+                    <args>
+                        <arg evaluator="xml" expression="$ctx:salesforce.account.name"/>
+                    </args>
+                </payloadFactory>
+                <enrich>
+                    <source clone="true" type="body"/>
+                    <target property="msdynamicscrm.account.body" type="property"/>
+                </enrich>
+                <log level="custom">
+                    <property expression="$ctx:msdynamicscrm.account.body" name="payload ------------------------------------------"/>
+                </log>
+                <msdynamics365.createEntity configKey="msdynamics_init">
+                    <entityType>accounts</entityType>
+                    <bodyContent>{$ctx:msdynamicscrm.account.body}</bodyContent>
+                </msdynamics365.createEntity>
+            </sequence>
+        </target>
+    </iterate>
+    <drop/>
+</sequence>
