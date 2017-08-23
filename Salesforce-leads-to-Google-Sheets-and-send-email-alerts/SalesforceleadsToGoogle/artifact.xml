@@ -11,7 +11,7 @@
     <artifact name="salesforceToGmailandSpreadsheet" groupId="com.example.SalesforceleadsToGoogle.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/sequences/salesforceToGmailandSpreadsheet.xml</file>
     </artifact>
-    <artifact name="SaesforceToGoolgle" groupId="com.example.SalesforceleadsToGoogle.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
-        <file>src/main/synapse-config/tasks/SaesforceToGoolgle.xml</file>
+    <artifact name="SalesforceToGoolgle" groupId="com.example.SalesforceleadsToGoogle.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/tasks/SalesforceToGoolgle.xml</file>
     </artifact>
 </artifacts>
