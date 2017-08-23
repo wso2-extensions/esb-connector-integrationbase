@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;SalesforceleadsToGoogle/src/main/synapse-config/local-entries/gmail_init.xml&apos; to &apos;sf_init.xml&apos;" description="Rename resource &apos;gmail_init.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/synapse-config/local-entries/gmail_init.xml" name="sf_init.xml" stamp="1501498827018" updateReferences="true"/>
+</session>
