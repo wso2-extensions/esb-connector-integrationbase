@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="github_init" groupId="com.example.GithubToSpreadsheet.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/github_init.xml</file>
+    </artifact>
+    <artifact name="spreadsheet_init" groupId="com.example.GithubToSpreadsheet.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/spreadsheet_init.xml</file>
+    </artifact>
+    <artifact name="githubToSpreadsheet" groupId="com.example.GithubToSpreadsheet.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/githubToSpreadsheet.xml</file>
+    </artifact>
+    <artifact name="getGitIssuesToSpreadsheet" groupId="com.example.GithubToSpreadsheet.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/tasks/getGitIssuesToSpreadsheet.xml</file>
+    </artifact>
+</artifacts>
