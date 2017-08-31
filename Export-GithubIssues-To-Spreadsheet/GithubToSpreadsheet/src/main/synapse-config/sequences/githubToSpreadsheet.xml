@@ -1,5 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="githubToSpreadsheet" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dblookup>
+        <connection>
+            <pool>
+                <password>root</password>
+                <property name="autocommit" value="false"/>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/githubToSpreadsheetRegistry?useSSL=false</url>
+                <user>root</user>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[select Timestamp from githubToSpreadsheetRegistry]]></sql>
+            <result column="Timestamp" name="githubToSpreadsheetRegistryTimestamp"/>
+        </statement>
+    </dblookup>
+    <log level="custom">
+        <property expression="$ctx:githubToSpreadsheetRegistryTimestamp" name="LastUpdatedTimestamp----------------------------------" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
     <script language="js"><![CDATA[mc.setProperty("github.apiUrl",java.lang.System.getenv("github_apiUrl"));
 			     mc.setProperty("github.accessToken",java.lang.System.getenv("github_accessToken"));
 			     mc.setProperty("github.mediaType",java.lang.System.getenv("github_mediaType"));
@@ -13,6 +31,7 @@
 			     mc.setProperty("github.sort",java.lang.System.getenv("github_sort"));
 			     mc.setProperty("github.direction",java.lang.System.getenv("github_direction"));			     
 			     mc.setProperty("github.labels",java.lang.System.getenv("github_labels"));
+			     mc.setProperty("github.since", mc.getProperty("githubToSpreadsheetRegistryTimestamp"));
 			     mc.setProperty("googlespreadsheet.accessToken",java.lang.System.getenv("googlespreadsheet_accessToken"));
 			     mc.setProperty("googlespreadsheet.refreshToken",java.lang.System.getenv("googlespreadsheet_refreshToken"));
 			     mc.setProperty("googlespreadsheet.clientId",java.lang.System.getenv("googlespreadsheet_clientId"));
@@ -21,19 +40,18 @@
 			     mc.setProperty("googlespreadsheet.spreadsheetId",java.lang.System.getenv("googlespreadsheet_spreadsheetId"));
 			     mc.setProperty("googlespreadsheet.range",java.lang.System.getenv("googlespreadsheet_range"));
 			     mc.setProperty("googlespreadsheet.valueInputOption",java.lang.System.getenv("googlespreadsheet_valueInputOption"));			     
-			     mc.setProperty("task.interval.time",java.lang.System.getenv("task_interval_time"));			     
-			   
- 			     var dt = new Date(); 
-			     var interval = mc.getProperty("task.interval.time");
-                 dt.setTime(dt.getTime()-interval*1000);
+			    
+ 			     var dt = new Date();
 			     var time = dt.toISOString();
-			     mc.setProperty("github.since", time);
-			     var re = mc.getProperty("github.repos");]]></script>
+			     mc.setProperty("newsystemTime",time);]]></script>
     <script language="js"><![CDATA[var payloadXML = new XML(<root/>);
         for each (var repo in String(mc.getProperty("github.repos")).split(',')) {
             payloadXML.appendChild(new XML(<repo>{repo}</repo>));
         }
         mc.setPayloadXML(payloadXML);]]></script>
+    <log level="custom">
+        <property expression="get-property('newsystemTime')" name="NewSystemTime**************************" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
     <property name="length" scope="operation" type="STRING" value=""/>
     <iterate continueParent="true" expression="//repo" id="repo_iterator" sequential="true" xmlns:ns="http://org.apache.synapse/xsd">
         <target>
@@ -102,4 +120,22 @@
             </sequence>
         </target>
     </iterate>
+    <dbreport>
+        <connection>
+            <pool>
+                <password>root</password>
+                <property name="autocommit" value="false"/>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://localhost:3306/githubToSpreadsheetRegistry?useSSL=false</url>
+                <user>root</user>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[UPDATE githubToSpreadsheetRegistry SET Timestamp = ?]]></sql>
+            <parameter expression="$ctx:newsystemTime" type="VARCHAR" xmlns:ns="http://org.apache.synapse/xsd"/>
+        </statement>
+    </dbreport>
+    <log level="custom">
+        <property expression="$ctx:newsystemTime" name="UPDATEDTIMESTAMP**************************" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
 </sequence>
