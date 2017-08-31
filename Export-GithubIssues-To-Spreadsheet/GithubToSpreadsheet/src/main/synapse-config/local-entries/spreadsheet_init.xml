@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="spreadsheet_init" xmlns="http://ws.apache.org/ns/synapse">
+    <googlespreadsheet.init>
+        <accessToken>{$ctx:googlespreadsheet.accessToken}</accessToken>
+        <refreshToken>{$ctx:googlespreadsheet.refreshToken}</refreshToken>
+        <clientId>{$ctx:googlespreadsheet.clientId}</clientId>
+        <clientSecret>{$ctx:googlespreadsheet.clientSecret}</clientSecret>
+        <apiUrl>{$ctx:googlespreadsheet.apiUrl}</apiUrl>
+    </googlespreadsheet.init>
+</localEntry>
