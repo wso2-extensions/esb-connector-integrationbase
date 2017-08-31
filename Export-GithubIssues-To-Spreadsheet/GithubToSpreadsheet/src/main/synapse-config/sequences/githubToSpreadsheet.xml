@@ -6,8 +6,8 @@
                 <password>root</password>
                 <property name="autocommit" value="false"/>
                 <driver>com.mysql.jdbc.Driver</driver>
-                <url>jdbc:mysql://localhost:3306/githubToSpreadsheetRegistry?useSSL=false</url>
-                <user>root</user>
+                <url>jdbc:mysql://mysql.storage.cloud.wso2.com:3306/githubToSpreadsheetRegistry_testcompanybiru?useSSL=false</url>
+                <user>root_ZvVXAGb1</user>
             </pool>
         </connection>
         <statement>
@@ -126,8 +126,8 @@
                 <password>root</password>
                 <property name="autocommit" value="false"/>
                 <driver>com.mysql.jdbc.Driver</driver>
-                <url>jdbc:mysql://localhost:3306/githubToSpreadsheetRegistry?useSSL=false</url>
-                <user>root</user>
+                <url>jdbc:mysql://mysql.storage.cloud.wso2.com:3306/githubToSpreadsheetRegistry_testcompanybiru?useSSL=false</url>
+                <user>root_ZvVXAGb1</user>
             </pool>
         </connection>
         <statement>
