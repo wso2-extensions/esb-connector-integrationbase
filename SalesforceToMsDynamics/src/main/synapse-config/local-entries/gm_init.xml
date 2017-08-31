@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="gm_init" xmlns="http://ws.apache.org/ns/synapse">
+    <gmail.init>
+        <userId>priyakules@gmail.com</userId>
+        <accessToken>ya29.Glu0BNRW7hOvB9yRBF0DbWjdDbF1F6wUiphhkG3xiEw1bPsG951YBIaM4SCbvKtR7_5Tw2uA54KIpZTbGnGID9z8-6wnfr9TiE1xGZWhNtuPWozI49sv2YPU21Ag</accessToken>
+        <apiUrl>https://www.googleapis.com/gmail</apiUrl>
+        <clientId>10264541875-b3k06ccep58c4d22bhel8e8j844gqlls.apps.googleusercontent.com</clientId>
+        <clientSecret>bIBZGrk7Q4cDqNr5OfLV2Tpu</clientSecret>
+        <refreshToken>1/JadBw1PP3UxRfgtCm9yhb0clDz6DIECgBAWlCOYaNw0</refreshToken>
+    </gmail.init>
+</localEntry>

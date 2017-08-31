@@ -9,16 +9,37 @@
   <name>SalesforceToMsDynamicsCAPP</name>
   <description>SalesforceToMsDynamicsCAPP</description>
   <properties>
-    <com.example.SalesforceToMsDynamics.sequence_._sampleRequest>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.sequence_._sampleRequest>
-    <com.example.SalesforceToMsDynamics.task_._SaesforceToMsDynamics>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.task_._SaesforceToMsDynamics>
-    <com.example.SalesforceToMsDynamics.local-entry_._sf_init>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.local-entry_._sf_init>
-    <com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector-1.0.1>capp/ApplicationServer</com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector-1.0.1>
-    <com.example.SalesforceToMsDynamics.local-entry_._msdynamics_init>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.local-entry_._msdynamics_init>
-    <artifact.types>jaggery/app=zip,lib/library/bundle=jar,service/rule=aar,event/receiver=xml,synapse/message-processors=xml,synapse/endpointTemplate=xml,synapse/message-store=xml,synapse/proxy-service=xml,event/execution-plan=siddhiql,carbon/application=car,registry/resource=zip,lib/dataservice/validator=jar,synapse/endpoint=xml,web/application=war,synapse/inbound-endpoint=xml,synapse/sequence=xml,synapse/configuration=xml,synapse/task=xml,synapse/api=xml,webapp/jaxws=war,service/meta=xml,bpel/workflow=zip,synapse/lib=zip,service/dataservice=dbs,event/publisher=xml,synapse/local-entry=xml,synapse/priority-executor=xml,synapse/template=xml,synapse/event-source=xml,event/stream=json,lib/carbon/ui=jar,service/axis2=aar,synapse/sequenceTemplate=xml,wso2/gadget=dar,lib/synapse/mediator=jar</artifact.types>
-    <com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector>capp/EnterpriseServiceBus</com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector>
     <com.example.SalesforceToDynamicsConnector.lib_._salesforcerest-connector>capp/EnterpriseServiceBus</com.example.SalesforceToDynamicsConnector.lib_._salesforcerest-connector>
+    <com.example.SalesforceToMsDynamics.task_._SaesforceToMsDynamics>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.task_._SaesforceToMsDynamics>
+    <artifact.types>jaggery/app=zip,lib/library/bundle=jar,service/rule=aar,event/receiver=xml,synapse/message-processors=xml,synapse/endpointTemplate=xml,synapse/message-store=xml,synapse/proxy-service=xml,event/execution-plan=siddhiql,carbon/application=car,registry/resource=zip,lib/dataservice/validator=jar,synapse/endpoint=xml,web/application=war,synapse/inbound-endpoint=xml,synapse/sequence=xml,synapse/configuration=xml,synapse/task=xml,synapse/api=xml,webapp/jaxws=war,service/meta=xml,bpel/workflow=zip,synapse/lib=zip,service/dataservice=dbs,event/publisher=xml,synapse/local-entry=xml,synapse/priority-executor=xml,synapse/template=xml,synapse/event-source=xml,event/stream=json,lib/carbon/ui=jar,service/axis2=aar,synapse/sequenceTemplate=xml,wso2/gadget=dar,lib/synapse/mediator=jar</artifact.types>
+    <com.example.SalesforceToMsDynamics.local-entry_._gm_init>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.local-entry_._gm_init>
+    <com.example.SalesforceToDynamicsConnector.lib_._gmail-connector>capp/EnterpriseServiceBus</com.example.SalesforceToDynamicsConnector.lib_._gmail-connector>
+    <com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector-1.0.1>capp/ApplicationServer</com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector-1.0.1>
+    <com.example.SalesforceToMsDynamics.local-entry_._sf_init>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.local-entry_._sf_init>
+    <com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector>capp/EnterpriseServiceBus</com.example.SalesforceToDynamicsConnector.lib_._msdynamics365-connector>
+    <com.example.SalesforceToMsDynamics.task_._SalesforceToMsDynamics>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.task_._SalesforceToMsDynamics>
+    <com.example.SalesforceToMsDynamics.local-entry_._msdynamics_init>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.local-entry_._msdynamics_init>
+    <com.example.SalesforceToMsDynamics.sequence_._sampleRequest>capp/EnterpriseServiceBus</com.example.SalesforceToMsDynamics.sequence_._sampleRequest>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>com.example.SalesforceToMsDynamics.task</groupId>
+      <artifactId>SalesforceToMsDynamics</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.example.SalesforceToDynamicsConnector.lib</groupId>
+      <artifactId>gmail-connector</artifactId>
+      <version>3.0.7</version>
+      <type>zip</type>
+    </dependency>
+    <dependency>
+      <groupId>com.example.SalesforceToMsDynamics.local-entry</groupId>
+      <artifactId>gm_init</artifactId>
+      <version>1.0.0</version>
+      <type>xml</type>
+    </dependency>
     <dependency>
       <groupId>com.example.SalesforceToMsDynamics.task</groupId>
       <artifactId>SaesforceToMsDynamics</artifactId>
@@ -38,16 +59,16 @@
       <type>xml</type>
     </dependency>
     <dependency>
-      <groupId>com.example.SalesforceToDynamicsConnector.lib</groupId>
-      <artifactId>salesforcerest-connector</artifactId>
-      <version>1.0.4</version>
-      <type>zip</type>
-    </dependency>
-    <dependency>
       <groupId>com.example.SalesforceToMsDynamics.local-entry</groupId>
       <artifactId>msdynamics_init</artifactId>
       <version>1.0.0</version>
       <type>xml</type>
+    </dependency>
+    <dependency>
+      <groupId>com.example.SalesforceToDynamicsConnector.lib</groupId>
+      <artifactId>salesforcerest-connector</artifactId>
+      <version>1.0.4</version>
+      <type>zip</type>
     </dependency>
     <dependency>
       <groupId>com.example.SalesforceToDynamicsConnector.lib</groupId>

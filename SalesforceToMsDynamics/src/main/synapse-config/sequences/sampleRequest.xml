@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequence name="sampleRequest" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dblookup>
+        <connection>
+            <pool>
+                <password>root</password>
+                <user>admin_L4WrEC-F</user>
+                <url>jdbc:mysql://mysql.storage.cloud.wso2.com:3306/salesforceToMsdynamics_ac1125?useSSL=false</url>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <property name="autocommit" value="false"/>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[select Timestamp from registry]]></sql>
+            <result column="Timestamp" name="registryTimestamp"/>
+        </statement>
+    </dblookup>
     <script language="js"><![CDATA[mc.setProperty("salesforcerest.accessToken",java.lang.System.getenv("salesforcerest_accessToken"));
 			     mc.setProperty("salesforcerest.apiUrl",java.lang.System.getenv("salesforcerest_apiUrl"));
 			     mc.setProperty("salesforcerest.apiVersion",java.lang.System.getenv("salesforcerest_apiVersion"));
@@ -15,23 +30,22 @@
  			     mc.setProperty("msdynamics365.resource",java.lang.System.getenv("msdynamics365_resource"));
  			     mc.setProperty("msdynamics365.clientSecret",java.lang.System.getenv("msdynamics365_clientSecret"));
  			     mc.setProperty("msdynamics365.clientId",java.lang.System.getenv("msdynamics365_clientId"));
- 			     mc.setProperty("task.interval.time",java.lang.System.getenv("task_interval_time"));
- 			     var dt = new Date(); 
-			     var interval = mc.getProperty("task.interval.time");
-                 dt.setTime(dt.getTime()-interval*1000);
-				 var queryString = "SELECT id, name, CreatedDate FROM Account WHERE CreatedDate > "   
-				 queryString = queryString.concat(dt.toISOString());                  
-                 mc.setProperty("queryString",queryString);]]></script>
+ 			     mc.setProperty("gmail.alert.to.user",java.lang.System.getenv("gmail_alert_to_user"));
+ 			     mc.setProperty("gmail.to",java.lang.System.getenv("gmail_to"));
+ 			     mc.setProperty("gmail.from",java.lang.System.getenv("gmail_from"));
+				 var queryString = "SELECT id, name, CreatedDate FROM Account WHERE CreatedDate > " 
+				 queryString = queryString.concat(mc.getProperty("registryTimestamp"));  
+                 mc.setProperty("queryString",queryString);
+                 var dt = new Date().toISOString();
+                 mc.setProperty("newsystemTime",dt);]]></script>
     <salesforcerest.query configKey="sf_init">
         <queryString>{$ctx:queryString}</queryString>
     </salesforcerest.query>
+    <property expression="//records" name="salesforce.records" scope="default" type="STRING"/>
     <iterate expression="//records" id="msgIterator">
         <target>
             <sequence>
                 <property expression="//records/Name/text()" name="salesforce.account.name" scope="default" type="STRING"/>
-                <log level="custom">
-                    <property expression="$ctx:salesforce.account.name" name="Name"/>
-                </log>
                 <payloadFactory media-type="json">
                     <format>
 		                {"name":"$1"}
@@ -51,6 +65,48 @@
                     <entityType>accounts</entityType>
                     <bodyContent>{$ctx:msdynamicscrm.account.body}</bodyContent>
                 </msdynamics365.createEntity>
+                <log level="custom">
+                    <property expression="$axis2:HTTP_SC" name="Status--------------------------"/>
+                </log>
+                <filter regex="false" source="$ctx:salesforce.records=''">
+                    <then>
+                        <filter regex="[2][0][4]" source="$axis2:HTTP_SC">
+                            <then>
+                                <dbreport>
+                                    <connection>
+                                        <pool>
+                                            <password>root</password>
+                                            <user>admin_L4WrEC-F</user>
+                                            <url>jdbc:mysql://mysql.storage.cloud.wso2.com:3306/salesforceToMsdynamics_ac1125?useSSL=false</url>
+                                            <driver>com.mysql.jdbc.Driver</driver>
+                                            <property name="autocommit" value="false"/>
+                                        </pool>
+                                    </connection>
+                                    <statement>
+                                        <sql><![CDATA[UPDATE registry SET Timestamp = ?]]></sql>
+                                        <parameter expression="$ctx:newsystemTime" type="VARCHAR"/>
+                                    </statement>
+                                </dbreport>
+                            </then>
+                            <else>
+                                <filter regex="true" source="boolean($ctx:gmail.alert.to.user)">
+                                    <then>
+                                        <property expression="fn:concat('The data ',$ctx:salesforce.account.name, ' is lost in this trigger and which will be captured in next trigger')" name="gmail.contentBody" scope="default" type="STRING"/>
+                                        <gmail.sendMail configKey="gm_init">
+                                            <to>{$ctx:gmail.to}</to>
+                                            <subject>Alert About Data Lost</subject>
+                                            <from>{$ctx:gmail.from}</from>
+                                            <messageBody>{$ctx:gmail.contentBody}</messageBody>
+                                            <contentType>text/html; charset=UTF-8</contentType>
+                                        </gmail.sendMail>
+                                    </then>
+                                    <else/>
+                                </filter>
+                            </else>
+                        </filter>
+                    </then>
+                    <else/>
+                </filter>
             </sequence>
         </target>
     </iterate>

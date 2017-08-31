@@ -11,4 +11,10 @@
     <artifact name="SaesforceToMsDynamics" groupId="com.example.SalesforceToMsDynamics.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
         <file>src/main/synapse-config/tasks/SaesforceToMsDynamics.xml</file>
     </artifact>
+    <artifact name="gm_init" groupId="com.example.SalesforceToMsDynamics.local-entry" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/gm_init.xml</file>
+    </artifact>
+    <artifact name="SalesforceToMsDynamics" groupId="com.example.SalesforceToMsDynamics.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/tasks/SalesforceToMsDynamics.xml</file>
+    </artifact>
 </artifacts>
