@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="github_init" xmlns="http://ws.apache.org/ns/synapse">
+    <github.init>
+        <apiUrl>{$ctx:github.apiUrl}</apiUrl>
+        <accessToken>{$ctx:github.accessToken}</accessToken>
+        <mediaType>{$ctx:github.mediaType}</mediaType>
+    </github.init>
+</localEntry>

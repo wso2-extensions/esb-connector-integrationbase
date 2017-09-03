@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="githubToSpreadsheet" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <dblookup>
+        <connection>
+            <pool>
+                <password>root</password>
+                <property name="autocommit" value="false"/>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://mysql.storage.cloud.wso2.com:3306/githubToSpreadsheetRegistry_testcompanybiru?useSSL=false</url>
+                <user>root_ZvVXAGb1</user>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[select Timestamp from githubToSpreadsheetRegistry]]></sql>
+            <result column="Timestamp" name="githubToSpreadsheetRegistryTimestamp"/>
+        </statement>
+    </dblookup>
+    <log level="custom">
+        <property expression="$ctx:githubToSpreadsheetRegistryTimestamp" name="LastUpdatedTimestamp----------------------------------" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+    <script language="js"><![CDATA[mc.setProperty("github.apiUrl",java.lang.System.getenv("github_apiUrl"));
+			     mc.setProperty("github.accessToken",java.lang.System.getenv("github_accessToken"));
+			     mc.setProperty("github.mediaType",java.lang.System.getenv("github_mediaType"));
+			     mc.setProperty("github.owner",java.lang.System.getenv("github_owner"));			     
+			     mc.setProperty("github.repos", java.lang.System.getenv("github_repos"));			     
+			     mc.setProperty("github.milestone",java.lang.System.getenv("github_milestone"));
+			     mc.setProperty("github.state",java.lang.System.getenv("github_state"));
+			     mc.setProperty("github.assignee",java.lang.System.getenv("github_assignee"));
+			     mc.setProperty("github.creator",java.lang.System.getenv("github_creator"));
+			     mc.setProperty("github.mentioned",java.lang.System.getenv("github_mentioned"));
+			     mc.setProperty("github.sort",java.lang.System.getenv("github_sort"));
+			     mc.setProperty("github.direction",java.lang.System.getenv("github_direction"));			     
+			     mc.setProperty("github.labels",java.lang.System.getenv("github_labels"));
+			     mc.setProperty("github.perPage",java.lang.System.getenv("github_perPage"));
+			     mc.setProperty("github.since", mc.getProperty("githubToSpreadsheetRegistryTimestamp"));
+			     mc.setProperty("googlespreadsheet.accessToken",java.lang.System.getenv("googlespreadsheet_accessToken"));
+			     mc.setProperty("googlespreadsheet.refreshToken",java.lang.System.getenv("googlespreadsheet_refreshToken"));
+			     mc.setProperty("googlespreadsheet.clientId",java.lang.System.getenv("googlespreadsheet_clientId"));
+			     mc.setProperty("googlespreadsheet.clientSecret",java.lang.System.getenv("googlespreadsheet_clientSecret"));
+			     mc.setProperty("googlespreadsheet.apiUrl",java.lang.System.getenv("googlespreadsheet_apiUrl"));
+			     mc.setProperty("googlespreadsheet.spreadsheetId",java.lang.System.getenv("googlespreadsheet_spreadsheetId"));
+			     mc.setProperty("googlespreadsheet.range",java.lang.System.getenv("googlespreadsheet_range"));
+			     mc.setProperty("googlespreadsheet.valueInputOption",java.lang.System.getenv("googlespreadsheet_valueInputOption"));			     
+			    
+ 			     var dt = new Date();
+			     var time = dt.toISOString();
+			     mc.setProperty("newsystemTime",time);]]></script>
+    <script language="js"><![CDATA[var payloadXML = new XML(<root/>);
+        for each (var repo in String(mc.getProperty("github.repos")).split(',')) {
+            payloadXML.appendChild(new XML(<repo>{repo}</repo>));
+        }
+        mc.setPayloadXML(payloadXML);]]></script>
+    <log level="custom">
+        <property expression="get-property('newsystemTime')" name="NewSystemTime**************************" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+    <property name="length" scope="operation" type="STRING" value=""/>
+    <iterate continueParent="true" expression="//repo" id="repo_iterator" sequential="true" xmlns:ns="http://org.apache.synapse/xsd">
+        <target>
+            <sequence>
+                <property name="payload" scope="operation" type="STRING" value=""/>
+                <property expression="$body/repo" name="repository" scope="default" type="STRING"/>
+                <github.listRepositoryIssues configKey="github_init">
+                    <owner>{$ctx:github.owner}</owner>
+                    <repo>{$ctx:repository}</repo>
+                    <milestone>{$ctx:github.milestone}</milestone>
+                    <state>{$ctx:github.state}</state>
+                    <assignee>{$ctx:github.assignee}</assignee>
+                    <creator>{$ctx:github.creator}</creator>
+                    <mentioned>{$ctx:github.mentioned}</mentioned>
+                    <labels>{$ctx:github.labels}</labels>
+                    <sort>{$ctx:github.sort}</sort>
+                    <direction>{$ctx:github.direction}</direction>
+                    <since>{$ctx:github.since}</since>
+                    <perPage>{$ctx:github.perPage}</perPage>
+                </github.listRepositoryIssues>
+                <iterate continueParent="true" expression="//jsonArray/jsonElement" id="issue_iterator" sequential="true">
+                    <target>
+                        <sequence>
+                            <property expression="//title" name="title" scope="default" type="STRING"/>
+                            <property expression="//state" name="state" scope="default" type="STRING"/>
+                            <property expression="//body" name="description" scope="default" type="STRING"/>
+                            <property expression="get-property('operation','payload')" name="payload" scope="default" type="STRING"/>
+                            <script language="js"><![CDATA[var repository = mc.getProperty('repository');
+                                var title = mc.getProperty("title");
+                                var description = mc.getProperty("description");
+                                var state = mc.getProperty("state");
+                                var payload = mc.getProperty("payload");
+
+                                payload = payload.concat("[");
+                                if(repository !="" || title !="" || description !="" || state !=""){
+                                payload = payload.concat('"' + repository + '","' + title + '","' + description + '","'
+                                + state +'"');
+                                }
+                                payload = payload.concat("],");
+                                mc.setProperty("payload", payload);
+								mc.setProperty("length",payload.length());]]></script>
+                            <property expression="get-property('payload')" name="payload" scope="operation" type="STRING"/>
+                            <property expression="get-property('length')" name="length" scope="operation" type="STRING"/>
+                        </sequence>
+                    </target>
+                </iterate>
+                <property expression="get-property('operation','payload')" name="payload" scope="operation" type="STRING"/>
+                <property expression="get-property('operation','length')" name="length" scope="operation" type="STRING"/>
+                <filter regex="true" source="boolean(get-property('operation','payload'))">
+                    <then>
+                        <property expression="fn:concat('[',fn:substring(get-property('operation','payload'),0,get-property('operation','length')),']')" name="values" scope="default" type="STRING"/>
+                    </then>
+                    <else/>
+                </filter>
+                <property name="payload" scope="operation" type="STRING" value=""/>
+                <filter regex="true" source="boolean(get-property('values'))">
+                    <then>
+                        <googlespreadsheet.addRowsColumnsData configKey="spreadsheet_init">
+                            <spreadsheetId>{$ctx:googlespreadsheet.spreadsheetId}</spreadsheetId>
+                            <range>{$ctx:googlespreadsheet.range}</range>
+                            <valueInputOption>{$ctx:googlespreadsheet.valueInputOption}</valueInputOption>
+                            <values>{$ctx:values}</values>
+                        </googlespreadsheet.addRowsColumnsData>
+                    </then>
+                    <else/>
+                </filter>
+            </sequence>
+        </target>
+    </iterate>
+    <dbreport>
+        <connection>
+            <pool>
+                <password>root</password>
+                <property name="autocommit" value="false"/>
+                <driver>com.mysql.jdbc.Driver</driver>
+                <url>jdbc:mysql://mysql.storage.cloud.wso2.com:3306/githubToSpreadsheetRegistry_testcompanybiru?useSSL=false</url>
+                <user>root_ZvVXAGb1</user>
+            </pool>
+        </connection>
+        <statement>
+            <sql><![CDATA[UPDATE githubToSpreadsheetRegistry SET Timestamp = ?]]></sql>
+            <parameter expression="$ctx:newsystemTime" type="VARCHAR" xmlns:ns="http://org.apache.synapse/xsd"/>
+        </statement>
+    </dbreport>
+    <log level="custom">
+        <property expression="$ctx:newsystemTime" name="UPDATEDTIMESTAMP**************************" xmlns:ns="http://org.apache.synapse/xsd"/>
+    </log>
+</sequence>
