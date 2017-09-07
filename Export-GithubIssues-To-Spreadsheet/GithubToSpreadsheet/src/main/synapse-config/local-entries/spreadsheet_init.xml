@@ -6,5 +6,6 @@
         <clientId>{$ctx:googlespreadsheet.clientId}</clientId>
         <clientSecret>{$ctx:googlespreadsheet.clientSecret}</clientSecret>
         <apiUrl>{$ctx:googlespreadsheet.apiUrl}</apiUrl>
+        <blocking>true</blocking>
     </googlespreadsheet.init>
 </localEntry>
