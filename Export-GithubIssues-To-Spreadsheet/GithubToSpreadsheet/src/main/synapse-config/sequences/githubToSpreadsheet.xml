@@ -22,8 +22,11 @@
 			     mc.setProperty("googlespreadsheet.spreadsheetId",java.lang.System.getenv("googlespreadsheet_spreadsheetId"));
 			     mc.setProperty("googlespreadsheet.range",java.lang.System.getenv("googlespreadsheet_range"));
 			     mc.setProperty("googlespreadsheet.valueInputOption",java.lang.System.getenv("googlespreadsheet_valueInputOption"));
+			     mc.setProperty("task.interval.time",java.lang.System.getenv("task_interval_time"));
 			   
- 			     var dt = new Date(); 
+ 			     var dt = new Date();
+			     var interval = mc.getProperty("task.interval.time");
+			     dt.setTime(dt.getTime()-interval*1000);
 			     var time = dt.toISOString();
 			     mc.setProperty("github.since", time);]]></script>
     <script language="js"><![CDATA[var payloadXML = new XML(<root/>);
