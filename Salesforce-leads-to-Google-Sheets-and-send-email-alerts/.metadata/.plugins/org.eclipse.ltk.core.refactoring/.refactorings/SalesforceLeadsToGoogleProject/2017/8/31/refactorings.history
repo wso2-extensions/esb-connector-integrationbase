@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;SalesforceleadsToGoogle/src/main/synapse-config/sequences/sales.xml&apos; to &apos;salesforceToGmailandSpreadsheet.xml&apos;" description="Rename resource &apos;sales.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/synapse-config/sequences/sales.xml" name="salesforceToGmailandSpreadsheet.xml" stamp="1501660004241" updateReferences="true"/>
-</session>
