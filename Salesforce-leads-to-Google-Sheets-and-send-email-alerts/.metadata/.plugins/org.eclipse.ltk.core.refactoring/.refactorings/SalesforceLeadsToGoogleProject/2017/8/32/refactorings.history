@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename resource &apos;SalesforceLeadsToGoogleProject/src/main/synapse-config/tasks/SaesforceToGoolgle.xml&apos; to &apos;SalesforceToGoolgle.xml&apos;" description="Rename resource &apos;SaesforceToGoolgle.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/synapse-config/tasks/SaesforceToGoolgle.xml" name="SalesforceToGoolgle.xml" stamp="1502183157724" updateReferences="true"/>
-</session>
