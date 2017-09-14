@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="msdynamics_init" xmlns="http://ws.apache.org/ns/synapse">
+    <msdynamics365.init>
+        <apiUrl>{$ctx:msdynamics365.apiUrl}</apiUrl>
+        <accessToken>{$ctx:msdynamics365.accessToken}</accessToken>
+        <apiVersion>{$ctx:msdynamics365.apiVersion}</apiVersion>
+        <refreshToken>{$ctx:msdynamics365.refreshToken}</refreshToken>
+        <clientSecret>{$ctx:msdynamics365.clientSecret}</clientSecret>
+        <clientId>{$ctx:msdynamics365.clientId}</clientId>
+        <resource>{$ctx:msdynamics365.resource}</resource>
+    </msdynamics365.init>
+</localEntry>

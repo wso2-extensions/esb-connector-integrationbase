@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="gm_init" xmlns="http://ws.apache.org/ns/synapse">
+    <gmail.init>
+        <userId>{$ctx:gmail.userId}</userId>
+        <accessToken>{$ctx:gmail.accessToken}</accessToken>
+        <apiUrl>{$ctx:gmail.apiUrl}</apiUrl>
+        <clientId>{$ctx:gmail.clientId}</clientId>
+        <clientSecret>{$ctx:gmail.clientSecret}</clientSecret>
+        <refreshToken>{$ctx:gmail.refreshToken}</refreshToken>
+    </gmail.init>
+</localEntry>

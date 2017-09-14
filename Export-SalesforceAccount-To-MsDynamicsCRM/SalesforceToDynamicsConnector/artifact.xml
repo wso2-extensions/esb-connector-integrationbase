@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="salesforcerest-connector" groupId="com.example.SalesforceToDynamicsConnector.lib" version="1.0.4" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>salesforcerest-connector-1.0.4.zip</file>
+    </artifact>
+    <artifact name="msdynamics365-connector" groupId="com.example.SalesforceToDynamicsConnector.lib" version="1.0.0" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>msdynamics365-connector-1.0.0.zip</file>
+    </artifact>
+    <artifact name="gmail-connector" groupId="com.example.SalesforceToDynamicsConnector.lib" version="3.0.7" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>gmail-connector-3.0.7.zip</file>
+    </artifact>
+</artifacts>
