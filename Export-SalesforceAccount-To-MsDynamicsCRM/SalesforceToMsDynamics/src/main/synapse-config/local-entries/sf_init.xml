@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="sf_init" xmlns="http://ws.apache.org/ns/synapse">
+    <salesforcerest.init>
+        <accessToken>{$ctx:salesforcerest.accessToken}</accessToken>
+        <apiVersion>{$ctx:salesforcerest.apiVersion}</apiVersion>
+        <hostName>{$ctx:salesforcerest.hostName}</hostName>
+        <refreshToken>{$ctx:salesforcerest.refreshToken}</refreshToken>
+        <clientSecret>{$ctx:salesforcerest.clientSecret}</clientSecret>
+        <clientId>{$ctx:salesforcerest.clientId}</clientId>
+        <apiUrl>{$ctx:salesforcerest.apiUrl}</apiUrl>
+        <registryPath>{$ctx:salesforcerest.registryPath}</registryPath>
+    </salesforcerest.init>
+</localEntry>
