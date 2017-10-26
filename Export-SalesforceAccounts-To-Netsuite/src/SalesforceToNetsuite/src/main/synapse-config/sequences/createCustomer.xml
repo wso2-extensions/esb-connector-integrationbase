@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="createCustomer" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <payloadFactory media-type="xml">
+        <format>
+            <urn:records xmlns:urn="wso2.connector.netsuite">
+                <platformMsgs:record xmlns:RecordRef="urn:core_2014_1.platform.webservices.netsuite.com" xmlns:listRel="urn:relationships_2014_1.lists.webservices.netsuite.com" xmlns:platformMsgs="urn:messages_2014_1.platform.webservices.netsuite.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="listRel:Customer">
+                    <listRel:email>$2</listRel:email>
+                    <listRel:entityId>$1</listRel:entityId>
+                    <listRel:companyName>$1</listRel:companyName>
+                    <listRel:addressbookList replaceAll="true">
+                        <listRel:addressbook>
+                            <listRel:addr1>$3</listRel:addr1>
+                            <listRel:addr2>$4</listRel:addr2>
+                            <listRel:city>$3</listRel:city>
+                        </listRel:addressbook>
+                    </listRel:addressbookList>
+                    <listRel:subsidiary>
+                        <RecordRef:internalId>$5</RecordRef:internalId>
+                        <RecordRef:type>subsidiary</RecordRef:type>
+                    </listRel:subsidiary>
+                </platformMsgs:record>
+            </urn:records>
+        </format>
+        <args>
+            <arg evaluator="xml" expression="get-property('salesforce.account.name')" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="get-property('salesforce.account.email')" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="get-property('salesforce.account.billingCity')" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="get-property('salesforce.account.billingCountry')" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="get-property('netsuite.subsidiaryId')" xmlns:ns="http://org.apache.synapse/xsd"/>
+        </args>
+    </payloadFactory>
+    <netsuite.addList configKey="netsuiteConfig">
+        <records xmlns:urn="wso2.connector.netsuite">{//urn:records/*}</records>
+    </netsuite.addList>
+</sequence>

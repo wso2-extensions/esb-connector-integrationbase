@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="salesforceToNetsuite" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+    <script language="js"><![CDATA[mc.setProperty("salesforce.username",java.lang.System.getenv("SALESFORCE_USERNAME"));
+			     mc.setProperty("salesforce.password",java.lang.System.getenv("SALESFORCE_PASSWORD"));
+			     mc.setProperty("salesforce.loginUrl",java.lang.System.getenv("SALESFORCE_LOGINURL"));
+			     mc.setProperty("salesforce.blocking",java.lang.System.getenv("SALESFORCE_BLOCKING"));
+			     mc.setProperty("netsuite.email",java.lang.System.getenv("NETSUITE_USERNAME"));
+			     mc.setProperty("netsuite.password",java.lang.System.getenv("NETSUITE_PASSWORD"));
+			     mc.setProperty("netsuite.apiUrl",java.lang.System.getenv("NETSUITE_APIURL"));
+			     mc.setProperty("netsuite.account",java.lang.System.getenv("NETSUITE_ACCOUNT"));
+			     mc.setProperty("netsuite.subsidiaryId",java.lang.System.getenv("NETSUITE_SUBSIDIARYID"));			     
+			     mc.setProperty("sync.interval",java.lang.System.getenv("SYNC_INTERVAL"));			     
+			     var dt = new Date(); 
+			     var interval = mc.getProperty("sync.interval");
+                 dt.setTime(dt.getTime()-interval*1000);
+				 var queryString = "Select Id,Name, BillingCity,BillingCountry from Account WHERE CreatedDate > "   
+				 queryString = queryString.concat(dt.toISOString());                  
+                 mc.setProperty("queryString",queryString);]]></script>
+    <property expression="fn:concat(&quot;select Id,Name, BillingCity,BillingCountry from Account WHERE Id = '0012800001b6IvQ'&quot;,'')" name="queryString11111111" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
+    <salesforce.queryAll configKey="salesforceConfig">
+        <batchSize>2000</batchSize>
+        <queryString xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">{$ctx:queryString}</queryString>
+    </salesforce.queryAll>
+    <iterate continueParent="true" expression="//ns:records" id="msgIterator" xmlns:ns="urn:partner.soap.sforce.com" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope" xmlns:urn="urn:sobject.partner.soap.sforce.com">
+        <target>
+            <sequence>
+                <property expression="//ns:records/urn:Id[1]/text()" name="salesforce.account.id" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:Name[1]/text()" name="salesforce.account.name" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:BillingCity[1]/text()" name="salesforce.account.billingCity" scope="default" type="STRING"/>
+                <property expression="//ns:records/urn:BillingCountry[1]/text()" name="salesforce.account.billingCountry" scope="default" type="STRING"/>
+                <property expression="fn:concat(&quot;select Email from Contact WHERE AccountId = '&quot;,get-property('salesforce.account.id'),&quot;'&quot;)" name="queryString" scope="default" type="STRING"/>
+                <salesforce.query configKey="salesforceConfig">
+                    <batchSize>200</batchSize>
+                    <queryString>{$ctx:queryString}</queryString>
+                </salesforce.query>
+                <property expression="//sf:records[1]/urn:Email[1]/text()" name="salesforce.account.email" scope="default" type="STRING" xmlns:sf="urn:partner.soap.sforce.com"/>
+                <sequence key="createCustomer"/>
+            </sequence>
+        </target>
+    </iterate>
+</sequence>

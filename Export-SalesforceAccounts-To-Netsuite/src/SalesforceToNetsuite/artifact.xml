@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="salesforceConfig" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/salesforceConfig.xml</file>
+    </artifact>
+    <artifact name="netsuiteConfig" version="1.0.0" type="synapse/local-entry" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/local-entries/netsuiteConfig.xml</file>
+    </artifact>
+    <artifact name="createCustomer" groupId="com.example.SalesforceToNetsuite.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/createCustomer.xml</file>
+    </artifact>
+    <artifact name="salesforceToNetsuite" groupId="com.example.SalesforceToNetsuite.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/salesforceToNetsuite.xml</file>
+    </artifact>
+    <artifact name="salesforceToNetsuiteTask" groupId="com.example.SalesforceToNetsuite.task" version="1.0.0" type="synapse/task" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/tasks/salesforceToNetsuiteTask.xml</file>
+    </artifact>
+</artifacts>
