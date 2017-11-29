@@ -4,6 +4,6 @@
         <username>{$ctx:salesforce.username}</username>
         <password>{$ctx:salesforce.password}</password>
         <loginUrl>{$ctx:salesforce.loginUrl}</loginUrl>
-        <blocking>false</blocking>
+        <blocking>true</blocking>
     </salesforce.init>
 </localEntry>

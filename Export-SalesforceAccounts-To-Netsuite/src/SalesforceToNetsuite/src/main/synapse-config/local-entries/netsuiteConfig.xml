@@ -15,6 +15,6 @@
         <email>{$ctx:netsuite.email}</email>
         <account>{$ctx:netsuite.account}</account>
         <roleType>{$ctx:roleType}</roleType>
-        <blocking>false</blocking>
+        <blocking>true</blocking>
     </netsuite.init>
 </localEntry>

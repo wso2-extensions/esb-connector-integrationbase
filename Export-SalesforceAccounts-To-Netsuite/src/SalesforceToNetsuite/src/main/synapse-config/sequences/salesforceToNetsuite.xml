@@ -16,7 +16,6 @@
 				 var queryString = "Select Id,Name, BillingCity,BillingCountry from Account WHERE CreatedDate > "   
 				 queryString = queryString.concat(dt.toISOString());                  
                  mc.setProperty("queryString",queryString);]]></script>
-    <property expression="fn:concat(&quot;select Id,Name, BillingCity,BillingCountry from Account WHERE Id = '0012800001b6IvQ'&quot;,'')" name="queryString11111111" scope="default" type="STRING" xmlns:ns="http://org.apache.synapse/xsd" xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope"/>
     <salesforce.queryAll configKey="salesforceConfig">
         <batchSize>2000</batchSize>
         <queryString xmlns:ns3="http://org.apache.synapse/xsd" xmlns:soapenv="http://www.w3.org/2003/05/soap-envelope">{$ctx:queryString}</queryString>
