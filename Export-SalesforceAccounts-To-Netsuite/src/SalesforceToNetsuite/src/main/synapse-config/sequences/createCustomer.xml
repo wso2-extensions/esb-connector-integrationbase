@@ -22,11 +22,11 @@
             </urn:records>
         </format>
         <args>
-            <arg evaluator="xml" expression="get-property('salesforce.account.name')" xmlns:ns="http://org.apache.synapse/xsd"/>
-            <arg evaluator="xml" expression="get-property('salesforce.account.email')" xmlns:ns="http://org.apache.synapse/xsd"/>
-            <arg evaluator="xml" expression="get-property('salesforce.account.billingCity')" xmlns:ns="http://org.apache.synapse/xsd"/>
-            <arg evaluator="xml" expression="get-property('salesforce.account.billingCountry')" xmlns:ns="http://org.apache.synapse/xsd"/>
-            <arg evaluator="xml" expression="get-property('netsuite.subsidiaryId')" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="$ctx:salesforce.account.name" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="$ctx:salesforce.account.email" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="$ctx:salesforce.account.billingCity" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="$ctx:salesforce.account.billingCountry" xmlns:ns="http://org.apache.synapse/xsd"/>
+            <arg evaluator="xml" expression="$ctx:netsuite.subsidiaryId" xmlns:ns="http://org.apache.synapse/xsd"/>
         </args>
     </payloadFactory>
     <netsuite.addList configKey="netsuiteConfig">
