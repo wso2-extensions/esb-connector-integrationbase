@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="salesforceConfig" xmlns="http://ws.apache.org/ns/synapse">
+    <salesforce.init>
+        <username>{$ctx:salesforce.username}</username>
+        <password>{$ctx:salesforce.password}</password>
+        <loginUrl>{$ctx:salesforce.loginUrl}</loginUrl>
+        <blocking>true</blocking>
+    </salesforce.init>
+</localEntry>

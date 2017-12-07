@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localEntry key="netsuiteConfig" xmlns="http://ws.apache.org/ns/synapse">
+    <netsuite.init>
+        <apiUrl>{$ctx:netsuite.apiUrl}</apiUrl>
+        <warningAsError>{$ctx:warningAsError}</warningAsError>
+        <disableSystemNotesForCustomFields>{$ctx:disableSystemNotesForCustomFields}</disableSystemNotesForCustomFields>
+        <ignoreReadOnlyFields>{$ctx:ignoreReadOnlyFields}</ignoreReadOnlyFields>
+        <disableMandatoryCustomFieldValidation>{$ctx:disableMandatoryCustomFieldValidation}</disableMandatoryCustomFieldValidation>
+        <roleInternalId>{$ctx:roleInternalId}</roleInternalId>
+        <partnerId>{$ctx:partnerId}</partnerId>
+        <applicationId>{$ctx:applicationId}</applicationId>
+        <roleName>{$ctx:roleName}</roleName>
+        <password>{$ctx:netsuite.password}</password>
+        <roleExternalId>{$ctx:roleExternalId}</roleExternalId>
+        <email>{$ctx:netsuite.email}</email>
+        <account>{$ctx:netsuite.account}</account>
+        <roleType>{$ctx:roleType}</roleType>
+        <blocking>true</blocking>
+    </netsuite.init>
+</localEntry>

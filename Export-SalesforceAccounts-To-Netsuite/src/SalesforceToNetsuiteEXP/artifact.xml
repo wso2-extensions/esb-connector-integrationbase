@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><artifacts>
+    <artifact name="salesforce-connector" groupId="com.example.SalesforceToNetsuiteEXP.lib" version="2.0.1" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>salesforce-connector-2.0.1.zip</file>
+    </artifact>
+    <artifact name="netsuite-connector" groupId="com.example.SalesforceToNetsuiteEXP.lib" version="1.0.1" type="synapse/lib" serverRole="EnterpriseServiceBus">
+        <file>netsuite-connector-1.0.1.zip</file>
+    </artifact>
+</artifacts>
