@@ -1,0 +1,10 @@
+{
+    "name": "Export Salesforce Account details to Microsoft Dynamics CRM",
+    "owner": "",
+    "category": "",
+    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Salesforce+Account+details+to+Microsoft+Dynamics+CRM",
+    "description": "When your organization creates new account in Salesforce, you might want to create the same account in Microsoft Dynamics CRM as well. Salesforce REST connector is used to get details of your new accounts (e.g., Id, name and etc) from Salesforce, then add that information to Microsoft Dynamics CRM using the Microsoft dynamics CRM connector",
+    "status": "Active",
+    "labels": [],
+    "releases": []
+}
