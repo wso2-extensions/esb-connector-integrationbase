@@ -1,10 +1,13 @@
 {
-    "name": "Export Salesforce Account details to Microsoft Dynamics CRM",
+    "name": "Export Github issues to Google Spreadsheet",
     "owner": "",
     "category": "",
-    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Salesforce+Account+details+to+Microsoft+Dynamics+CRM",
-    "description": "When your organization creates new account in Salesforce, you might want to create the same account in Microsoft Dynamics CRM as well. Salesforce REST connector is used to get details of your new accounts (e.g., Id, name and etc) from Salesforce, then add that information to Microsoft Dynamics CRM using the Microsoft dynamics CRM connector",
+    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Github+issues+to+Google+Spreadsheet",
+    "description": "This is the use case for Github and Spreadsheet connectors by integrating the Github connector with the spreadsheet Connector. Here, we use Github connector to get details of newly created Github issues for the git repositories (Eg:- Repository Name, Issue Title, Issue Description, Issue status) and add those details to Spreadsheet using Google Spreadsheet connector.",
     "status": "Active",
-    "labels": [],
+    "labels": [
+        "googlespreadsheet",
+        "github"
+    ],
     "releases": []
 }
