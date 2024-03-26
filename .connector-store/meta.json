@@ -1,0 +1,13 @@
+{
+    "name": "Export Github issues to Google Spreadsheet",
+    "owner": "",
+    "category": "",
+    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Github+issues+to+Google+Spreadsheet",
+    "description": "This is the use case for Github and Spreadsheet connectors by integrating the Github connector with the spreadsheet Connector. Here, we use Github connector to get details of newly created Github issues for the git repositories (Eg:- Repository Name, Issue Title, Issue Description, Issue status) and add those details to Spreadsheet using Google Spreadsheet connector.",
+    "status": "Active",
+    "labels": [
+        "googlespreadsheet",
+        "github"
+    ],
+    "releases": []
+}
