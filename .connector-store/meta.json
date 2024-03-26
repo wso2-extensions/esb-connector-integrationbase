@@ -1,0 +1,13 @@
+{
+    "name": "Export Salesforce Accounts to NetSuite",
+    "owner": "",
+    "category": "",
+    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Salesforce+Accounts+to+NetSuite",
+    "description": "When your organization creates new accounts for the opportunities you have won in the Salesforce, you might want to synchronize the details of those accounts with the NetSuite. Salesforce connector is used to get details of the new accounts (e.g., name, address and etc) from Salesforce, then add that information to NetSuite using the NetSuite connector.",
+    "status": "Active",
+    "labels": [
+        "Salesforce",
+        "NetSuite"
+    ],
+    "releases": []
+}
