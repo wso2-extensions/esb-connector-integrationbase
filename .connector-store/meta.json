@@ -11,5 +11,12 @@
         "Spreadsheet",
         "Google"
     ],
-    "releases": []
+    "releases": [
+        {
+            "tagName": "1.0.0",
+            "products": [
+                "EI 6.1.1"
+            ]
+        }
+    ]
 }
