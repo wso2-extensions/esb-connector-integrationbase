@@ -1,14 +1,11 @@
 {
-    "name": "Export Salesforce Accounts to NetSuite",
+    "name": "Export Salesforce Account details to Microsoft Dynamics CRM",
     "owner": "",
     "category": "",
-    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Salesforce+Accounts+to+NetSuite",
-    "description": "When your organization creates new accounts for the opportunities you have won in the Salesforce, you might want to synchronize the details of those accounts with the NetSuite. Salesforce connector is used to get details of the new accounts (e.g., name, address and etc) from Salesforce, then add that information to NetSuite using the NetSuite connector.",
+    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Salesforce+Account+details+to+Microsoft+Dynamics+CRM",
+    "description": "When your organization creates new account in Salesforce, you might want to create the same account in Microsoft Dynamics CRM as well. Salesforce REST connector is used to get details of your new accounts (e.g., Id, name and etc) from Salesforce, then add that information to Microsoft Dynamics CRM using the Microsoft dynamics CRM connector",
     "status": "Active",
-    "labels": [
-        "Salesforce",
-        "NetSuite"
-    ],
+    "labels": [],
     "releases": [
         {
             "tagName": "1.0.0",
