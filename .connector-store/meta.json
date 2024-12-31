@@ -1,13 +1,15 @@
 {
-    "name": "Export Github issues to Google Spreadsheet",
+    "name": "SalesforceLeadsToSpreadsheet",
     "owner": "",
     "category": "",
-    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Github+issues+to+Google+Spreadsheet",
-    "description": "This is the use case for Github and Spreadsheet connectors by integrating the Github connector with the spreadsheet Connector. Here, we use Github connector to get details of newly created Github issues for the git repositories (Eg:- Repository Name, Issue Title, Issue Description, Issue status) and add those details to Spreadsheet using Google Spreadsheet connector.",
+    "documentationUrl": "https://docs.wso2.com/display/IntegrationCloud/Export+Salesforce+Leads+to+Google+Docs",
+    "description": "When your organization receives a new lead, you will need to alert the relevant stakeholders of the lead. You will also need to share information about these leads with people who do not have direct access to Salesforce and this information maybe required offline. In this step by step guide, we explain how to use the Salesforce SOAP connector to get details of your new leads (i.e ID, name, email) from Salesforce, use the Google Spreadsheet connector to add that information to a Google spreadsheet, and generate an an email alert to the relevant stakeholders (i.e. regional managers) using the Gmail connector.",
     "status": "Active",
     "labels": [
-        "googlespreadsheet",
-        "github"
+        "Gmail",
+        "Salesforce",
+        "Spreadsheet",
+        "Google"
     ],
     "releases": [
         {
